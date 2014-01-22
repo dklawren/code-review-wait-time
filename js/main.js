@@ -9,10 +9,7 @@ require.config({
 require(['jquery', 'es-glue'], function ($, ES) {
   'use strict';
 
-
-	var options = {};
-
-	ES.query(options, function(data, status, xhr) {
+	ES.query(function(data, status, xhr) {
 		console.log(data, status, xhr);
 	});
 

@@ -21,7 +21,7 @@ define(["jquery"], function($) {
     }
   };
 
-  ESGlue.query = function(options, onDone) {
+  ESGlue.query = function(onDone) {
     $.ajax({
       type: "POST",
       data: JSON.stringify(defaultObj),
