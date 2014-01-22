@@ -5,7 +5,7 @@ define(["jquery"], function($) {
   }
 
   ESGlue.query = function(options, onDone) {
-    $.get("http://10.251.33.248:9200/reviews/review",
+    $.post("http://10.251.33.248:9200/reviews/review",
       '{' + 
         '"from":"reviews",' +
         '"select":{"name":"num_bugs","value":"bug_id","aggregate":"count"},' +
