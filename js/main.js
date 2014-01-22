@@ -1,13 +1,14 @@
 require.config({
-  baseUrl: '/js',
+  baseDir: '/js',
   paths: {
       'jquery': '/vendor/jquery',
       'es-glue': 'es-glue'
   }
 });
 
-require(['jquery'], function ($, ES) {
+require(['jquery', 'es-glue'], function ($, ES) {
   'use strict';
+
 
 	var options = {};
 
