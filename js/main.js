@@ -99,7 +99,7 @@ require(['jquery', 'es-glue', 'd3'], function ($, ES, d3) {
     var row = d3.select("#component-times")
         .selectAll("tr")
         .data(Object.keys(aggregate)
-                    .filter(function(k) { return aggregate[k].year.count; }))
+                    .filter(function(k) aggregate[k].year.count))
         .enter()
         .append("tr");
     row.append("td")
