@@ -99,21 +99,21 @@ require(['jquery', 'es-glue', 'd3'], function ($, ES, d3) {
     var row = d3.select("#component-times")
         .selectAll("tr")
         .data(Object.keys(aggregate)
-                    .filter(function(k){ aggregate[k].year.count}))
+                    .filter(function(k){ return aggregate[k].year.count}))
         .enter()
         .append("tr");
     row.append("td")
-        .text(function(d){ capitalize(d.split("|")[1])});
+        .text(function(d){ return capitalize(d.split("|")[1])});
     row.append("td")
-        .text(function(d){ formatTime(aggregate[d].week.time / aggregate[d].week.count)});
+        .text(function(d){ return formatTime(aggregate[d].week.time / aggregate[d].week.count)});
     row.append("td")
-        .text(function(d){ formatTime(aggregate[d].month.time / aggregate[d].month.count)});
+        .text(function(d){ return formatTime(aggregate[d].month.time / aggregate[d].month.count)});
     row.append("td")
-        .text(function(d){ formatTime(aggregate[d].year.time / aggregate[d].year.count)});
+        .text(function(d){ return formatTime(aggregate[d].year.time / aggregate[d].year.count)});
     row.append("td")
-        .text(function(d){ formatTime(aggregate[d].year.min)});
+        .text(function(d){ return formatTime(aggregate[d].year.min)});
     row.append("td")
-        .text(function(d){ formatTime(aggregate[d].year.max)});
+        .text(function(d){ return formatTime(aggregate[d].year.max)});
 
     var data1 = [];
     for (var i = 0; i < 14; i += 0.5) {
