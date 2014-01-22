@@ -10,9 +10,7 @@ define(["jquery"], function($) {
       "query":{"match_all":{}},
       "filter":{"and":[{"match_all":{}},{"term":{"product":"firefox"}}]}
     }},
-    "from":0,
-    "size":0,
-    "sort":[],
+    "size":40000,
     "facets": {"default": {
       "terms": {
         "script_field":"var Value2Pipe = function(value){\nif (value==null){ \"0\" }else if (value is ArrayList || value is org.elasticsearch.common.mvel2.util.FastList){var out = \"\";\nforeach (v : value) out = (out==\"\") ? v : out + \"|\" + Value2Pipe(v);\n'a'+Value2Pipe(out);\n}else \nif (value is Long || value is Integer || value is Double){ 'n'+value; }else \nif (!(value is String)){ 's'+value.getClass().getName(); }else \n\"s\"+value.replace(\"\\\\\", \"\\\\\\\\\").replace(\"|\", \"\\\\p\");};\nvar get = function(hash, key){\nif (hash==null) null; else hash[key];\n};\nvar getDocValue = function(name){\nvar out = [];\nvar v = doc[name];\nif (v==null || v.value==null) { null; } else if (v.values.length<=1){ v.value; } else {for(k : v.values) out.add(k); out;}};\n''+Value2Pipe(getDocValue(\"product\"))+'|'+Value2Pipe(getDocValue(\"component\"))",
