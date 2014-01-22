@@ -161,13 +161,56 @@ require(['jquery', 'es-glue', 'd3'], function ($, ES, d3) {
                 .text(formatTime(total[i]));
         });
 
+    var total = {
+        week: {
+            count: 0,
+            time: 0,
+            min: Number.MAX_VALUE,
+            max: Number.MIN_VALUE,
+        },
+        month: {
+            count: 0,
+            time: 0,
+            min: Number.MAX_VALUE,
+            max: Number.MIN_VALUE,
+        },
+        year: {
+            count: 0,
+            time: 0,
+            min: Number.MAX_VALUE,
+            max: Number.MIN_VALUE,
+        },
+    };
+    for (var k in aggregate) {
+        for (var l in aggregate[k]) {
+            total[l].count = total[l].count + aggregate[k][l].count;
+            total[l].time = total[l].time + aggregate[k][l].time;
+            total[l].min = Math.min(total[l].min, aggregate[k][l].min);
+            total[l].max = Math.max(total[l].max, aggregate[k][l].max);
+        }
+    }
+    total = [
+        total.week.time / total.week.count,
+        total.month.time / total.month.count,
+        total.year.time / total.year.count,
+        total.year.min,
+        total.year.max,
+    ];
+    var totalTimes = d3.select("#total-times")
+        .selectAll("tr")
+        .each(function(d, i) {
+            d3.select(this)
+                .select("td")
+                .text(formatTime(total[i]));
+        });
+
     var chart_data = [
         ["Week", toDays(total[0])],
         ["Month", toDays(total[1])],
         ["12 Months", toDays(total[2])],
         ["Shortest", toDays(total[3])],
         ["Longest", toDays(total[4])]
-    ]; 
+    ];
     $.plot("#chart", [ chart_data ], {
             series: {
                 bars: {
@@ -181,5 +224,5 @@ require(['jquery', 'es-glue', 'd3'], function ($, ES, d3) {
                 tickLength: 0
             }
         });
-  });
+    });
 });
