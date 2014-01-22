@@ -95,6 +95,9 @@ require(['jquery', 'es-glue', 'd3'], function ($, ES, d3) {
       }
       return (ms / 86400000).toFixed(1) + " days";
     }
+    function toDays(ms) {
+      return (ms / 86400000).toFixed(1);
+    }
     var aggregate = aggregateTimes(data);
     var row = d3.select("#component-times")
         .selectAll("tr")
@@ -158,17 +161,72 @@ require(['jquery', 'es-glue', 'd3'], function ($, ES, d3) {
                 .text(formatTime(total[i]));
         });
 
-    var data1 = [];
-    for (var i = 0; i < 14; i += 0.5) {
-      data1.push([i, Math.sin(i)]);
+    var total = {
+        week: {
+            count: 0,
+            time: 0,
+            min: Number.MAX_VALUE,
+            max: Number.MIN_VALUE,
+        },
+        month: {
+            count: 0,
+            time: 0,
+            min: Number.MAX_VALUE,
+            max: Number.MIN_VALUE,
+        },
+        year: {
+            count: 0,
+            time: 0,
+            min: Number.MAX_VALUE,
+            max: Number.MIN_VALUE,
+        },
+    };
+    for (var k in aggregate) {
+        for (var l in aggregate[k]) {
+            total[l].count = total[l].count + aggregate[k][l].count;
+            total[l].time = total[l].time + aggregate[k][l].time;
+            total[l].min = Math.min(total[l].min, aggregate[k][l].min);
+            total[l].max = Math.max(total[l].max, aggregate[k][l].max);
+        }
     }
-    var data2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
-    var data3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
-    $.plot("#chart", [ data1, data2, data3 ]);
-
     $(function(){
       $("#stats-table").tablesorter({ sortList: [[0, 0]] });
     });
 
+    total = [
+        total.week.time / total.week.count,
+        total.month.time / total.month.count,
+        total.year.time / total.year.count,
+        total.year.min,
+        total.year.max,
+    ];
+    var totalTimes = d3.select("#total-times")
+        .selectAll("tr")
+        .each(function(d, i) {
+            d3.select(this)
+                .select("td")
+                .text(formatTime(total[i]));
+        });
+
+    var chart_data = [
+        ["Week", toDays(total[0])],
+        ["Month", toDays(total[1])],
+        ["12 Months", toDays(total[2])],
+        ["Shortest", toDays(total[3])],
+        ["Longest", toDays(total[4])]
+    ]; 
+    $.plot("#chart", [ chart_data ], {
+            series: {
+                bars: {
+                    show: true,
+                    barWidth: 0.6,
+                    align: "center"
+                }
+            },
+            xaxis: {
+                mode: "categories",
+                tickLength: 0
+            }
+        });
   });
 });
