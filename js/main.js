@@ -165,5 +165,10 @@ require(['jquery', 'es-glue', 'd3'], function ($, ES, d3) {
     var data2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
     var data3 = [[0, 12], [7, 12], null, [7, 2.5], [12, 2.5]];
     $.plot("#chart", [ data1, data2, data3 ]);
+
+    $(function(){
+      $("#stats-table").tablesorter({ sortList: [[0, 0]] });
+    });
+
   });
 });
