@@ -6,7 +6,7 @@ define(["jquery"], function($) {
 
   var defaultObj =
   {
-    "fields": ["review_time", "request_time"],
+    "fields": ["review_time", "request_time", "component"],
     "query":{"filtered":{
       "query":{"match_all":{}},
       "filter":{"and":[{"match_all":{}},{"term":{"product":"firefox"}}]}
