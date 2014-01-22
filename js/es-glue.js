@@ -11,7 +11,7 @@ define(["jquery"], function($) {
         "select":{"name":"num_bugs","value":"bug_id","aggregate":"count"},
         "edges":["product","component"],
         "esfilter":{"term":{"product":"firefox"}}
-       }', oneDone, "json");
+       }', onDone, "json");
   };
 
   return ESGlue;
